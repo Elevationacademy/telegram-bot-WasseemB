@@ -1,6 +1,6 @@
 from flask import Flask, Response, request
 import requests
-from methods import is_prime, is_palindrome, sqrt, popular
+from methods import popular
 from wrapped_methods import wrap_is_prime, wrap_sqrt, wrap_is_palindrome, wrap_is_fact
 import database
 from collections import defaultdict
@@ -38,11 +38,9 @@ def get_command(first_word):
 
 @app.route('/message', methods=["POST"])
 def handle_message():
-    print(request.get_json())
     chat_id = request.get_json()['message']['chat']['id']
     text = request.get_json()['message']['text']
     first_word = text.split(' ', 1)[0]
-    print(request.get_json()["message"]["chat"])
     command = get_command(first_word)
     if not command:
         result = f"Command {first_word} not found"
